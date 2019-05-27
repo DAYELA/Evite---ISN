@@ -32,10 +32,9 @@ public class Evite {
         mainMenu = new MainMenu();
 
         fenetre.setTitle("Évite - ISN");
-        fenetre.setSize(1920, 1080);
+        fenetre.setSize(1080, 720);
         fenetre.setContentPane(mainMenu);
         fenetre.setUndecorated(true);
-        fenetre.setExtendedState(Frame.MAXIMIZED_BOTH);
         fenetre.setResizable(false);
         fenetre.setLocationRelativeTo(null);
         fenetre.setVisible(true);
