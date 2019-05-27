@@ -21,9 +21,9 @@ public class ControlJoueur extends JPanel implements KeyListener, ActionListener
     Image level;
     Image levelPlayable;
 
-    int joueurTaille = 80;
+    int joueurTaille = 40;
 
-    double joueurX = 880, joueurY = 1000, movementX = 0, ennemiX = 0, ennemiY = 0, ennemiMovementY = 10;
+    double joueurX = 540, joueurY = 680, movementX = 0, ennemiX = 0, ennemiY = 0, ennemiMovementY = 10;
 
     public ControlJoueur()
     {
@@ -35,7 +35,7 @@ public class ControlJoueur extends JPanel implements KeyListener, ActionListener
 
         SoundManager.playRandomSong();
 
-        ennemiX = getRandomNumberInRange(640, 1280-joueurTaille);
+        ennemiX = getRandomNumberInRange(340, 740-joueurTaille);
         
     }
 
@@ -72,9 +72,9 @@ public class ControlJoueur extends JPanel implements KeyListener, ActionListener
 
         if(!pause){
             ennemiY += ennemiMovementY;
-            if(ennemiY >= 1000){
+            if(ennemiY >= this.getWidth()-joueurTaille){
                 ennemiY = 0;
-                ennemiX = getRandomNumberInRange(640, 1280-joueurTaille);
+                ennemiX = getRandomNumberInRange(340, 740-joueurTaille);
                 ennemiMovementY = getRandomNumberInRange(10, 20);
             }
 
@@ -87,7 +87,7 @@ public class ControlJoueur extends JPanel implements KeyListener, ActionListener
 
     public void moveLeft()
     {
-        if (joueurX <= 640 || pause)
+        if (joueurX <= 340 || pause)
         {
             movementX = 0;
 
@@ -99,7 +99,7 @@ public class ControlJoueur extends JPanel implements KeyListener, ActionListener
 
     public void moveRight()
     {
-        if (joueurX >= 1280-joueurTaille || pause)
+        if (joueurX >= 740-joueurTaille || pause)
         {
             movementX = 0;
             return;

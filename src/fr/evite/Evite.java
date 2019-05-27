@@ -33,7 +33,7 @@ public class Evite {
 
         fenetre.setTitle("Évite - ISN");
         fenetre.setSize(1080, 720);
-        fenetre.setContentPane(mainMenu);
+        fenetre.setContentPane(new ControlJoueur());
         fenetre.setUndecorated(true);
         fenetre.setResizable(false);
         fenetre.setLocationRelativeTo(null);
