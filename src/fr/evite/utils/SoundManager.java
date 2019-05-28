@@ -1,4 +1,4 @@
-package fr.evite.utils.sound;
+package fr.evite.utils;
 
 import fr.evite.Evite;
 

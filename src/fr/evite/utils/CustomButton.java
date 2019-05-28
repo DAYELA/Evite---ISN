@@ -1,7 +1,5 @@
 package fr.evite.utils;
 
-import fr.evite.utils.sound.SoundManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;

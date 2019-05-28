@@ -1,18 +1,15 @@
 package fr.evite.game;
 
-import fr.evite.Evite;
-import fr.evite.MainMenu;
-import fr.evite.utils.MapManager;
-import fr.evite.utils.sound.SoundManager;
-import sun.applet.Main;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
+import fr.evite.Evite;
+import fr.evite.utils.MapManager;
+import fr.evite.utils.SoundManager;
 import java.util.Random;
 
-public class ControlJoueur extends JPanel implements KeyListener, ActionListener
+public class Game extends JPanel implements KeyListener, ActionListener
 {
     private boolean pause = false;
 
@@ -21,11 +18,25 @@ public class ControlJoueur extends JPanel implements KeyListener, ActionListener
     Image level;
     Image levelPlayable;
 
-    int joueurTaille = 40;
+    public static JLabel score = new JLabel("Score:");
+    public static int scorePoint = 0;
 
-    double joueurX = 540, joueurY = 680, movementX = 0, ennemiX = 0, ennemiY = 0, ennemiMovementY = 10;
+    private static int joueurTaille = 40;
 
-    public ControlJoueur()
+    private static double joueurX = 540, joueurY = 680, movementX = 0, ennemiX = 0, ennemiY = 0, ennemiMovementY = 10;
+
+    public static boolean isFacile = true;
+
+    public static void initGame(){
+        scorePoint = 0;
+        movementX = 0;
+        SoundManager.playRandomSong();
+        ennemiX = getRandomNumberInRange(340, 740-joueurTaille);
+        joueurX = 540;
+        score.setText("Score: " + scorePoint);
+    }
+
+    public Game()
     {
         shapeTimer.start();
 
@@ -33,10 +44,13 @@ public class ControlJoueur extends JPanel implements KeyListener, ActionListener
         setFocusable(true);
         setFocusTraversalKeysEnabled(true);
 
-        SoundManager.playRandomSong();
-
         ennemiX = getRandomNumberInRange(340, 740-joueurTaille);
-        
+
+        score.setBounds(200, 100, 200, 100);
+        score.setFont(score.getFont().deriveFont(20F));
+        this.add(score);
+
+        initGame();
     }
 
     public void paintComponent(Graphics g)
@@ -47,7 +61,7 @@ public class ControlJoueur extends JPanel implements KeyListener, ActionListener
         level = new ImageIcon(MapManager.selectRandomMap()).getImage();
         g2.drawImage(level, 0, 0, this);
 
-        levelPlayable = new ImageIcon(Evite.ResourcePath + "textures/maps/map1UP.png").getImage();
+        levelPlayable = new ImageIcon(Evite.ResourcePath + "/textures/maps/map1UP.png").getImage();
         g2.drawImage(levelPlayable, 0, 0, this);
 
         Rectangle2D ennemi = new Rectangle2D.Double(ennemiX, ennemiY, joueurTaille, joueurTaille);
@@ -60,8 +74,8 @@ public class ControlJoueur extends JPanel implements KeyListener, ActionListener
 
         if(ennemi.intersects(joueur)){
             SoundManager.pause(SoundManager.getCurrentSong());
-            Evite.fenetre.setContentPane(new MainMenu());
-            Evite.fenetre.validate();
+            Evite.fenetre.setContentPane(Evite.mainMenu);
+            Evite.fenetre.revalidate();
         }
 
     }
@@ -72,13 +86,27 @@ public class ControlJoueur extends JPanel implements KeyListener, ActionListener
 
         if(!pause){
             ennemiY += ennemiMovementY;
+            if(!isFacile){
+                if(ennemiY < 400){
+                    ennemiX = joueurX;
+                }
+            }
             if(ennemiY >= this.getWidth()-joueurTaille){
                 ennemiY = 0;
                 ennemiX = getRandomNumberInRange(340, 740-joueurTaille);
                 ennemiMovementY = getRandomNumberInRange(10, 20);
+
+                scorePoint ++;
+                score.setText("Score: " + scorePoint);
             }
 
             joueurX += movementX;
+            if(joueurX <= 340){
+                joueurX = 340;
+            }
+            if(joueurX >= 740 - joueurTaille){
+                joueurX = 740 - joueurTaille;
+            }
         }
 
 

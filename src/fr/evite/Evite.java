@@ -1,6 +1,5 @@
 package fr.evite;
 
-import fr.evite.game.ControlJoueur;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +32,7 @@ public class Evite {
 
         fenetre.setTitle("Évite - ISN");
         fenetre.setSize(1080, 720);
-        fenetre.setContentPane(new ControlJoueur());
+        fenetre.setContentPane(new MainMenu());
         fenetre.setUndecorated(true);
         fenetre.setResizable(false);
         fenetre.setLocationRelativeTo(null);
